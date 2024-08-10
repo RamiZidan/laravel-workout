@@ -115,8 +115,6 @@ class MuscleController extends Controller
             $muscle->delete();
             return $this->returnSuccessMessage("muscle has been deleted successfully");
         } catch (\Throwable $ex) {
-       
-      
             return $this->returnError(400, $ex->getMessage());
         }
     }
