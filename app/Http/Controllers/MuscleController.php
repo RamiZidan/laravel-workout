@@ -78,25 +78,27 @@ class MuscleController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            echo $id;
             $data = $request->only(
                 'name',
                 'image',
             );
 
             $validator = Validator::make($data, [
-                'name' => 'required|unique',
-                'image' => 'required',
-                ]);
+                'name' => 'required|unique:muscles',
+                    ]);
 
             if ($validator->fails()) {
                 return $this->returnValidationError(422, $validator);
             }
-
-            $filename = $request->file('Image_URl')->store('posts', 'public');
             $muscle= Muscle::find( $request->id );
             $muscle->name = $request->name;
-            $muscle->image = $filename;
+            if($request->hasFile('image')){
+                $filename = $request->file('Image_URl')->store('posts', 'public');
+                $muscle->image = $filename;
+
+            }
+
+          
             $muscle->save();
 
             return $this->returnData('muscle_id', $muscle->id);
