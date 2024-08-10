@@ -108,63 +108,43 @@ class MuscleController extends Controller
         }
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request, $id){
         try {
 
-            $data = $request->only(
-                'id',
-              
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-                ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
-            }
-            $muscle= Muscle::find( $request->id );
+            $muscle= Muscle::find( $id );
             $muscle->delete();
             return $this->returnSuccessMessage("muscle has been deleted successfully");
         } catch (\Throwable $ex) {
        
       
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
-    public function retrieve(Request $request){
+    public function retrieve(Request $request, $id){
         try {
-            $data = $request->only(
-                'id',
-              
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-                ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
+            $muscle= Muscle::find( $id );
+            if($muscle){
+            return $this->returnData('muscle', $muscle);}
+            else{
+                return $this->returnError(404, 'Not Found');
             }
-            $muscle= Muscle::find( $request->id );
-            return $this->returnData('muscle', $muscle);
         } catch (\Throwable $ex) {
        
       
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
     public function index(Request $request){
         try {
 
-          $muscles = Muscle::get();
+          $muscles = Muscle::select('id', 'name', 'image')->get();
           return $this->returnData('muscles', $muscles);
         } catch (\Throwable $ex) {
        
       
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 }

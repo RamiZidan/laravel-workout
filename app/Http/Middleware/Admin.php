@@ -23,7 +23,7 @@ class Admin
     
       
             $user = $request->user();
-         
+            if($user){
             if(!$user->is_admin){
 
                 return $this->returnError(403,'Access Denied as you are not Admin!');
@@ -32,6 +32,10 @@ class Admin
             else{
                 return $next($request);
                 
+            }}
+            else{
+                return $this->returnError(401,'Not authenticated');
+
             }
         
        
