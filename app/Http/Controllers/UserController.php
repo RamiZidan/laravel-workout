@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course_Day;
+use App\Models\Days_Have_Exercises;
 use Illuminate\Http\Request;
 use App\Traits\GeneralTrait;
 use Illuminate\Routing\Controllers\Middleware;
@@ -10,6 +12,7 @@ use App\Models\User;
 use App\Models\Muscle;
 use App\Models\UserMuscle;
 use stdClass;
+use App\Models\Course;
 
 class UserController extends Controller
 {
@@ -27,50 +30,42 @@ class UserController extends Controller
         ];
     }
     use GeneralTrait;
-    
+
 
     public function update(Request $request)
     {
         try {
 
-            $data = $request->only(
-                'name',
-                'image',
-                'blank_duration',
-                'tall',
-                'weight',
-                'age',
-                'gender'
-            );
-            $validator = Validator::make($data, [
-                'name' => 'required',
-                'blank_duration' => 'required',
-                'tall' => 'required',
-                'weight' => 'required',
-                'age' => 'required',
-                'gender' => 'required',
-            ]);
-            if ($validator->fails()) {
-
-                return $this->returnError(422, $validator->messages());
-            }
-            if ($request->hasFile('image')) {
-                $filename = $request->file('Image_URl')->store('posts', 'public');
-            } else {
-                $filename = "profiles/DEFAULT.png";
-            }
             $user = $request->user();
             $bmi = $request->weight / ($request->tall * $request->tall);
-            $user->update([
-                'name' => $request->name,
-                'blank_duration' => $request->blank_duration,
-                'tall' => $request->tall,
-                'weight' => $request->weight,
-                'age' => $request->age,
-                'gender' => $request->gender,
-                'bmi' => $bmi,
-                'image' => $filename,
-            ]);
+            if ($request->course_id) {
+                $course = Course::find($request->course_id);
+                if (!$course->is_public && $course->created_by != $request->user()->id) {
+                    return $this->returnError(403, 'Not allowed to join this course');
+                }
+                if ($course->is_public) {
+                    $new_course = Course::create(['name' => $course->name, 'duration' => $course->duration, 'is_public' => false, 'created_by' => $user->id, 'left_days' => $course->left_days]);
+                    $days = Course_Day::where('course_id', $course->id)->get();
+                    foreach ($days as $day) {
+                        $new_day = Course_Day::create(['name' => $day->name, 'course_id' => $new_course->id]);
+                        $exercises = Days_Have_Exercises::where('course_day_id', $day->id)->get();
+                        foreach ($exercises as $exercise) {
+                            Days_Have_Exercises::create(['day_id' => $new_day->id, 'exercise_id' => $exercise->exercise_id]);
+                        }
+                    }
+                    $request->course_id = $new_course->id;
+                }
+            }
+            $user->update($request->only('name', 'level', 'blank_duration', 'tall', 'weight', 'age', 'bmi', 'gender', 'image', 'course_id'));
+            if ($request->hasFile('image')) {
+                $filename = $request->file('Image_URl')->store('posts', 'public');
+
+                $user->image = $filename;
+            }
+            $bmi = $user->weight / ($user->tall * $user->tall);
+            $user->bmi = $bmi;
+            $user->save();
+
 
             return $this->returnData('user_id', $user->id);
         } catch (\Throwable $ex) {
@@ -78,5 +73,5 @@ class UserController extends Controller
         }
     }
 
-   
+
 }

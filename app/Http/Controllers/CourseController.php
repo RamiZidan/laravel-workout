@@ -11,14 +11,14 @@ use App\Models\Course;
 class CourseController extends Controller
 {
     use GeneralTrait;
-    
+
     public static function middleware(): array
     {
-        
+
         return [
-            new Middleware(middleware: 'auth:api'),
+            new Middleware(middleware: 'auth:api', except: ['index']),
         ];
-           
+
     }
 
     public function create(Request $request)
@@ -41,104 +41,87 @@ class CourseController extends Controller
                 return response($validator->message(), 422);
             }
 
-            $user = $request->auth();
+            $user = $request->user();
             $course = Course::create([
                 'name' => $request->name,
                 'duration' => $request->duration,
                 'created_by' => $user->id,
-                'is_public' => $request->is_public
+                'left_days' => $request->duration
+
             ]);
+            $user = $request->user();
+            if ($user->is_admin) {
+                $course->is_public = $request->is_public;
+                $course->save();
+            }
 
             return $this->returnData('course_id', $course->id);
 
         } catch (\Throwable $ex) {
 
 
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         try {
 
-            $data = $request->only(
-                'id',
-                'name',
-                'duration',
-
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-                'name' => 'required',
-                'duration' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
+            $course = Course::find($id);
+            $user = $request->user();
+            if (!$user->is_admin) {
+                if ($course->created_by != $user->id) {
+                    return $this->returnError(404, "Course Not Found");
+                }
+            }
+            $course->update($request->only('name', 'duration'));
+            if ($user->is_admin) {
+                $course->update($request->only('is_public'));
             }
 
-
-            $course = Course::find($request->id);
-            $course->name = $request->name;
-            $course->duration = $request->duration;
-            $course->save();
 
             return $this->returnData('course_id', $course->id);
 
         } catch (\Throwable $ex) {
-            return $this->returnError($ex->getCode(), $ex->getMessage());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
         try {
-
-            $data = $request->only(
-                'id',
-
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
+            $course = Course::find($id);
+            $user = $request->user();
+            if (!$user->is_admin) {
+                if ($course->created_by != $user->id) {
+                    return $this->returnError(404, "Course Not Found");
+                }
             }
-            $course = Course::find($request->id);
             $course->delete();
             return $this->returnSuccessMessage("course has been deleted successfully");
         } catch (\Throwable $ex) {
 
 
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
-    public function retrieve(Request $request)
+    public function retrieve(Request $request, $id)
     {
         try {
-            $data = $request->only(
-                'id',
-
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
+            $course = Course::find($id);
+            $user = $request->user();
+            if (!$user->is_admin) {
+                if ($course->created_by != $user->id && !$course->is_public) {
+                    return $this->returnError(404, "Course Not Found");
+                }
             }
-            $course = Course::find($request->id);
             return $this->returnData('course', $course);
         } catch (\Throwable $ex) {
 
 
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
@@ -146,13 +129,25 @@ class CourseController extends Controller
     {
         try {
 
-            $user = $request->auth();
-            $courses = Course::where('created_by', $user->id)->orwhere('is_public', true)->get();
+            $user = $request->user();
+            if ($user) {
+                $courses = Course::where('created_by', $user->id)->orwhere('is_public', true)->get();
+            } else {
+                $courses = Course::where('is_public', true)->get();
+            }
             return $this->returnData('courses', $courses);
         } catch (\Throwable $ex) {
+            return $this->returnError(400, $ex->getMessage());
+        }
+    }
 
-
-            return response($ex->getMessage(), $ex->getCode());
+    public function admin_index(Request $request)
+    {
+        try {
+            $courses = Course::get();
+            return $this->returnData('courses', $courses);
+        } catch (\Throwable $ex) {
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 

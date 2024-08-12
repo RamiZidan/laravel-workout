@@ -16,7 +16,7 @@ class ExerciseController extends Controller
     {
         
         return [
-            new Middleware(middleware: 'auth:api'),
+            new Middleware(middleware: 'auth:api', except: ['index']),
         ];
            
     }
@@ -47,7 +47,7 @@ class ExerciseController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response($validator->message(), 422);
+                return $this->returnValidationError(422, $validator);
             }
             $filename = $request->file('image')->store('posts', 'public');
 
@@ -65,16 +65,16 @@ class ExerciseController extends Controller
         } catch (\Throwable $ex) {
 
 
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
+
         }
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         try {
 
             $data = $request->only(
-                'id',
                 'name',
                 'image',
                 'set_count',
@@ -85,9 +85,7 @@ class ExerciseController extends Controller
             );
 
             $validator = Validator::make($data, [
-                'id'=>'required',
                 'name' => 'required',
-                'image' => 'required',
                 'set_count' => 'required',
                 'times' => 'required',
                 'level' => 'required',
@@ -96,75 +94,48 @@ class ExerciseController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response($validator->message(), 422);
+                return $this->returnValidationError(422, $validator);
             }
-            $filename = $request->file('image')->store('posts', 'public');
-
-
-            $exercise = Exercise::find($request->id);
+            $exercise = Exercise::find($id);
             $exercise->name = $request->name;
             $exercise->set_count = $request->set_count;
             $exercise->times = $request->times;
             $exercise->level = $request->level;
             $exercise->muscle_id = $request->muscle_id;
-            $exercise->image = $filename;
+
+            if($request->hasFile('image')){
+                $filename = $request->file('image')->store('posts', 'public');
+                $exercise->image = $filename;
+
+            }
 
             $exercise->save();
 
             return $this->returnData('exercise_id', $exercise->id);
 
         } catch (\Throwable $ex) {
-            return $this->returnError($ex->getCode(), $ex->getMessage());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
         try {
-
-            $data = $request->only(
-                'id',
-
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
-            }
-            $exercise = Exercise::find($request->id);
+            $exercise = Exercise::find($id);
             $exercise->delete();
             return $this->returnSuccessMessage("exercise has been deleted successfully");
         } catch (\Throwable $ex) {
-
-
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
-    public function retrieve(Request $request)
+    public function retrieve(Request $request, $id)
     {
-        try {
-            $data = $request->only(
-                'id',
-
-            );
-
-            $validator = Validator::make($data, [
-                'id' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response($validator->message(), 422);
-            }
-            $exercise = Exercise::find($request->id);
+        try{
+            $exercise = Exercise::find($id);
             return $this->returnData('exercise', $exercise);
         } catch (\Throwable $ex) {
-
-
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 
@@ -174,9 +145,7 @@ class ExerciseController extends Controller
             $exercises = Exercise::get();
             return $this->returnData('exercises', $exercises);
         } catch (\Throwable $ex) {
-
-
-            return response($ex->getMessage(), $ex->getCode());
+            return $this->returnError(400, $ex->getMessage());
         }
     }
 }

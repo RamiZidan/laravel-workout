@@ -213,7 +213,8 @@ class AuthController extends Controller implements HasMiddleware
         return $this->returnData("data", [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'is_admin' => auth()->user()->is_admin,
         ]);
     }
 }

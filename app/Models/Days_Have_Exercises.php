@@ -9,6 +9,7 @@ class Days_Have_Exercises extends Model
 {
     use HasFactory;
 
+    protected $table = 'days_have_exercises';
     protected $fillable = [
         'day_id',
         'exercise_id',

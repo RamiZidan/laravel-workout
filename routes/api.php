@@ -32,13 +32,7 @@ Route::group(['midllware' => 'api'], function ($router) {
 
     });
 
-    Route::group(['prefix' => 'user_muscle'], function ($router) {
-        Route::post('', [UserMuscleController::class, 'create']);
-        Route::get('/{id}', [UserMuscleController::class, 'retrieve']);
-        Route::put('/{id}', [UserMuscleController::class, 'update']);
-        Route::get('', [UserMuscleController::class, 'index']);
-
-    });
+   
 
     Route::group(
         ['middleware' => \App\Http\Middleware\Admin::class, 'prefix' => 'dashboard'],
@@ -55,7 +49,7 @@ Route::group(['midllware' => 'api'], function ($router) {
             });
 
             Route::group([
-                'prefix' => 'exercise'
+                'prefix' => 'exercises'
 
             ], function ($router) {
                 Route::post('', [ExerciseController::class, 'create']);
@@ -65,6 +59,48 @@ Route::group(['midllware' => 'api'], function ($router) {
                 Route::get('', [ExerciseController::class, 'index']);
 
             });
+
+            Route::group([
+                'prefix' => 'courses'
+        
+            ], function ($router) {
+                Route::post('', [CourseController::class, 'create']);
+                Route::put('/{id}', [CourseController::class, 'update']);
+                Route::delete('/{id}', [CourseController::class, 'delete']);
+                Route::get('/{id}', [CourseController::class, 'retrieve']);
+                Route::get('', [CourseController::class, 'admin_index']);
+
+                Route::group([
+                    'prefix' => '{course_id}/course_day'
+            
+                ], function ($router) {
+                    Route::post('', [CourseDayController::class, 'create']);
+                    Route::put('/{id}', [CourseDayController::class, 'update']);
+                    Route::delete('/{id}', [CourseDayController::class, 'delete']);
+                    Route::get('/{id}', [CourseDayController::class, 'retrieve']);
+                    Route::get('', [CourseDayController::class, 'index']);
+
+                    Route::group([
+                        'prefix' => '{course_day_id}/day_exercise'
+                
+                    ], function ($router) {
+                        Route::post('', [DaysHaveExercisesController::class, 'create']);
+                        Route::delete('/{id}', [DaysHaveExercisesController::class, 'delete']);
+                        Route::get('/{id}', [DaysHaveExercisesController::class, 'retrieve']);
+                        Route::get('', [DaysHaveExercisesController::class, 'index']);
+                
+                    });
+            
+                });
+            });
+            Route::group(['prefix' => 'user_muscle'], function ($router) {
+                Route::get('/{id}', [UserMuscleController::class, 'retrieve']);
+                Route::put('/{id}', [UserMuscleController::class, 'update']);
+                Route::get('', [UserMuscleController::class, 'admin_index']);
+
+        
+            });
+        
         }
     );
 
@@ -78,53 +114,63 @@ Route::group(['midllware' => 'api'], function ($router) {
             });
 
             Route::group([
-                'prefix' => 'exercise'
+                'prefix' => 'exercises'
             ], function ($router) {
                 Route::get('', [ExerciseController::class, 'index']);
+            });
+
+            Route::group([
+                'prefix' => 'courses'
+        
+            ], function ($router) {
+                Route::post('', [CourseController::class, 'create']);
+                Route::put('/{id}', [CourseController::class, 'update']);
+                Route::delete('/{id}', [CourseController::class, 'delete']);
+                Route::get('/{id}', [CourseController::class, 'retrieve']);
+                Route::get('', [CourseController::class, 'index']);
+
+                Route::group([
+                    'prefix' => '{course_id}/course_day'
+            
+                ], function ($router) {
+                    Route::post('', [CourseDayController::class, 'create']);
+                    Route::put('/{id}', [CourseDayController::class, 'update']);
+                    Route::delete('/{id}', [CourseDayController::class, 'delete']);
+                    Route::get('/{id}', [CourseDayController::class, 'retrieve']);
+                    Route::get('', [CourseDayController::class, 'index']);
+
+                    Route::group([
+                        'prefix' => '{course_day_id}/day_exercise'
+                
+                    ], function ($router) {
+                        Route::post('', [DaysHaveExercisesController::class, 'create']);
+                        Route::delete('/{id}', [DaysHaveExercisesController::class, 'delete']);
+                        Route::get('/{id}', [DaysHaveExercisesController::class, 'retrieve']);
+                        Route::get('', [DaysHaveExercisesController::class, 'index']);
+                
+                    });
+            
+                });
+            
+            });
+
+            Route::group(['prefix' => 'user_muscle'], function ($router) {
+                Route::get('/{id}', [UserMuscleController::class, 'retrieve']);
+                Route::put('/{id}', [UserMuscleController::class, 'update']);
+                Route::get('', [UserMuscleController::class, 'index']);
+        
             });
         }
     );
 
-    Route::group([
-        'prefix' => 'course'
-
-    ], function ($router) {
-        Route::post('', [CourseController::class, 'create']);
-        Route::put('/{id}', [CourseController::class, 'update']);
-        Route::delete('/{id}', [CourseController::class, 'delete']);
-        Route::get('/{id}', [CourseController::class, 'retrieve']);
-        Route::get('', [CourseController::class, 'index']);
-
-    });
-
-    Route::group([
-        'prefix' => '{course_id}/course_day'
-
-    ], function ($router) {
-        Route::post('', [CourseDayController::class, 'create']);
-        Route::put('/{id}', [CourseDayController::class, 'update']);
-        Route::delete('/{id}', [CourseDayController::class, 'delete']);
-        Route::get('/{id}', [CourseDayController::class, 'retrieve']);
-        Route::get('', [CourseDayController::class, 'index']);
-
-    });
+   
+   
 
 
+    
 
 
-
-
-    Route::group([
-        'prefix' => '{course_id}/{course_day_id}/day_exercise'
-
-    ], function ($router) {
-        Route::post('', [DaysHaveExercisesController::class, 'create']);
-        Route::put('/{id}', [DaysHaveExercisesController::class, 'update']);
-        Route::delete('/{id}', [DaysHaveExercisesController::class, 'delete']);
-        Route::get('/{id}', [DaysHaveExercisesController::class, 'retrieve']);
-        Route::get('', [DaysHaveExercisesController::class, 'index']);
-
-    });
+   
 
 
     Route::group([
