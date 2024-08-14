@@ -28,7 +28,7 @@ class AuthController extends Controller implements HasMiddleware
     {
 
         return [
-            new Middleware(middleware: 'auth:api', except: ['login', 'register']),
+            new Middleware(middleware: 'auth.guard:api', except: ['login', 'register']),
         ];
 
     }

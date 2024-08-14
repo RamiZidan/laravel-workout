@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Days_Have_Exercises;
 use App\Models\Course;
 use App\Models\Course_Day;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class DaysHaveExercisesController extends Controller
+class DaysHaveExercisesController extends Controller implements HasMiddleware
 {
     use GeneralTrait;
 
@@ -18,7 +19,7 @@ class DaysHaveExercisesController extends Controller
     {
 
         return [
-            new Middleware(middleware: 'auth:api', except: ['index']),
+            new Middleware(middleware: 'auth.guard:api', except: ['index']),
         ];
 
     }

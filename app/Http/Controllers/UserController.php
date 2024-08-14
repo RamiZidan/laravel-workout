@@ -13,8 +13,9 @@ use App\Models\Muscle;
 use App\Models\UserMuscle;
 use stdClass;
 use App\Models\Course;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
     //
     /**
@@ -26,7 +27,7 @@ class UserController extends Controller
     {
 
         return [
-            new Middleware(middleware: 'auth:api'),
+            new Middleware(middleware: 'auth.guard:api'),
         ];
     }
     use GeneralTrait;
@@ -37,8 +38,14 @@ class UserController extends Controller
         try {
 
             $user = $request->user();
+            
             $bmi = $request->weight / ($request->tall * $request->tall);
             if ($request->course_id) {
+                if($user->course_id){
+                    $old_course = Course::find($user->course_id);
+                    $old_course->left_days = $old_course->duration;
+                    $old_course->save();
+                }
                 $course = Course::find($request->course_id);
                 if (!$course->is_public && $course->created_by != $request->user()->id) {
                     return $this->returnError(403, 'Not allowed to join this course');
@@ -62,6 +69,7 @@ class UserController extends Controller
 
                 $user->image = $filename;
             }
+       
             $bmi = $user->weight / ($user->tall * $user->tall);
             $user->bmi = $bmi;
             $user->save();

@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Muscle;
 use App\Models\User;
 use App\Models\UserMuscle;
-class MuscleController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+
+class MuscleController extends Controller implements HasMiddleware
 {
     //
     /**
@@ -30,7 +32,7 @@ class MuscleController extends Controller
     {
         
         return [
-            new Middleware(middleware: 'auth:api'),
+            new Middleware(middleware: 'auth.guard:api', except:['index']),
         ];
            
     }

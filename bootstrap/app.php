@@ -13,6 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->alias([
+            'isAdmin' => \App\Http\Middleware\Admin::class,
+            'auth.guard' => \App\Http\Middleware\AssignGuard::class,
+
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

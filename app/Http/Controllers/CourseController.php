@@ -7,8 +7,10 @@ use App\Traits\GeneralTrait;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Course;
+use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class CourseController extends Controller
+class CourseController extends Controller implements HasMiddleware
 {
     use GeneralTrait;
 
@@ -16,7 +18,7 @@ class CourseController extends Controller
     {
 
         return [
-            new Middleware(middleware: 'auth:api', except: ['index']),
+            new Middleware(middleware: 'auth.guard:api', except: ['index']),
         ];
 
     }
@@ -75,7 +77,19 @@ class CourseController extends Controller
                     return $this->returnError(404, "Course Not Found");
                 }
             }
+            $old_duration = $course->duration;
             $course->update($request->only('name', 'duration'));
+            $duration_defference = $course->duration - $old_duration;
+            $course->left_days += $duration_defference;
+            if($course->left_days <= 0){
+                $course->left_days = $course->duration;
+                $course->save();
+                $people = User::where('course_id', $course->id)->get();
+                foreach($people as $person){
+                    $person->course_id = null;
+                    $person->save();
+                }
+            }
             if ($user->is_admin) {
                 $course->update($request->only('is_public'));
             }

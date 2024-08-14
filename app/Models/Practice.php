@@ -11,7 +11,7 @@ class Practice extends Model
     protected $fillable = [
         'user_id',
         'exercise_id',
-        'course_id',
+        'day_id',
         'duration',
         'feed_back',
     ];

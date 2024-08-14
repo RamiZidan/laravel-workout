@@ -8,8 +8,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use App\Models\UserMuscle;
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class UserMuscleController extends Controller
+class UserMuscleController extends Controller implements HasMiddleware
 {
 
     use GeneralTrait;
@@ -18,7 +19,7 @@ class UserMuscleController extends Controller
     {
 
         return [
-            new Middleware(middleware: 'auth:api', except: []),
+            new Middleware(middleware: 'auth.guard:api', except: []),
         ];
 
     }

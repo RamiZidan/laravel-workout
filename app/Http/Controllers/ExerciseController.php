@@ -7,8 +7,9 @@ use App\Traits\GeneralTrait;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Exercise;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ExerciseController extends Controller
+class ExerciseController extends Controller implements HasMiddleware
 {
     use GeneralTrait;
 
@@ -16,7 +17,7 @@ class ExerciseController extends Controller
     {
         
         return [
-            new Middleware(middleware: 'auth:api', except: ['index']),
+            new Middleware(middleware: 'auth.guard:api', except: ['index']),
         ];
            
     }

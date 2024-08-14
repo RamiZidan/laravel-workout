@@ -8,8 +8,9 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Course_Day;
 use App\Models\Course;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class CourseDayController extends Controller
+class CourseDayController extends Controller implements HasMiddleware
 {
     //
 
@@ -18,7 +19,7 @@ class CourseDayController extends Controller
     {
 
         return [
-            new Middleware(middleware: 'auth:api', except: ['index']),
+            new Middleware(middleware: 'auth.guard:api', except: ['index']),
         ];
 
     }
@@ -141,6 +142,13 @@ class CourseDayController extends Controller
                     $q->with(['exercise']);
                 }
             ])->find($id);
+            if(count($course_day->exercises)> 0){
+                $course_day->first_exercise = $course_day->exercises[0]->id;
+            }
+            else{
+                $course_day->first_exercise = null;
+
+            }
             return $this->returnData('course_day', $course_day);
         } catch (\Throwable $ex) {
 
@@ -159,7 +167,18 @@ class CourseDayController extends Controller
                     return $this->returnError(403, 'Not Allowed to edit this day');
                 }
             }
-            $course_days = Course_Day::where('course_id', $course_id)->get();
+            $course_days = Course_Day::where('course_id', $course_id)->with('exercises')->get();
+            foreach($course_days as $course_day){
+                if(count($course_day->exercises)> 0){
+                    $course_day->first_exercise = $course_day->exercises[0]->id;
+                }
+                else{
+                    $course_day->first_exercise = null;
+
+                }
+                unset($course_day->exercises);
+
+            }
             return $this->returnData('course_days', $course_days);
 
 

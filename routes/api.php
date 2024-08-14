@@ -100,6 +100,29 @@ Route::group(['midllware' => 'api'], function ($router) {
 
         
             });
+            Route::group([
+                'prefix' => 'practices'
+        
+            ], function ($router) {
+                Route::post('', [PracticeController::class, 'create']);
+                Route::put('/{id}', [PracticeController::class, 'update']);
+                Route::delete('/{id}', [PracticeController::class, 'delete']);
+                Route::get('/{id}', [PracticeController::class, 'retrieve']);
+                Route::get('', [PracticeController::class, 'admin_index']);
+        
+            });
+
+            Route::group([
+                'prefix' => 'day_practices'
+        
+            ], function ($router) {
+                Route::post('', [DayPracticeController::class, 'create']);
+                Route::put('/{id}', [DayPracticeController::class, 'update']);
+                Route::delete('/{id}', [DayPracticeController::class, 'delete']);
+                Route::get('/{id}', [DayPracticeController::class, 'retrieve']);
+                Route::get('', [DayPracticeController::class, 'admin_index']);
+        
+            });
         
         }
     );
@@ -147,7 +170,7 @@ Route::group(['midllware' => 'api'], function ($router) {
                         Route::delete('/{id}', [DaysHaveExercisesController::class, 'delete']);
                         Route::get('/{id}', [DaysHaveExercisesController::class, 'retrieve']);
                         Route::get('', [DaysHaveExercisesController::class, 'index']);
-                
+                       
                     });
             
                 });
@@ -158,6 +181,31 @@ Route::group(['midllware' => 'api'], function ($router) {
                 Route::get('/{id}', [UserMuscleController::class, 'retrieve']);
                 Route::put('/{id}', [UserMuscleController::class, 'update']);
                 Route::get('', [UserMuscleController::class, 'index']);
+        
+            });
+
+             
+            Route::group([
+                'prefix' => 'practices'
+        
+            ], function ($router) {
+                Route::post('', [PracticeController::class, 'create']);
+                Route::put('/{id}', [PracticeController::class, 'update']);
+                Route::delete('/{id}', [PracticeController::class, 'delete']);
+                Route::get('/{id}', [PracticeController::class, 'retrieve']);
+                Route::get('', [PracticeController::class, 'index']);
+        
+            });
+
+            Route::group([
+                'prefix' => 'day_practices'
+        
+            ], function ($router) {
+                Route::post('', [DayPracticeController::class, 'create']);
+                Route::put('/{id}', [DayPracticeController::class, 'update']);
+                Route::delete('/{id}', [DayPracticeController::class, 'delete']);
+                Route::get('/{id}', [DayPracticeController::class, 'retrieve']);
+                Route::get('', [DayPracticeController::class, 'index']);
         
             });
         }
@@ -173,28 +221,8 @@ Route::group(['midllware' => 'api'], function ($router) {
    
 
 
-    Route::group([
-        'prefix' => '{course_id}/{course_day_id}/{day_exercise_id}/practice'
-
-    ], function ($router) {
-        Route::post('', [PracticeController::class, 'create']);
-        Route::put('/{id}', [PracticeController::class, 'update']);
-        Route::delete('/{id}', [PracticeController::class, 'delete']);
-        Route::get('/{id}', [PracticeController::class, 'retrieve']);
-        Route::get('', [PracticeController::class, 'index']);
-
-    });
+   
 
 
-    Route::group([
-        'prefix' => '{course_id}/{course_day_id}/day_practice'
-
-    ], function ($router) {
-        Route::post('', [DayPracticeController::class, 'create']);
-        Route::put('/{id}', [DayPracticeController::class, 'update']);
-        Route::delete('/{id}', [DayPracticeController::class, 'delete']);
-        Route::get('/{id}', [DayPracticeController::class, 'retrieve']);
-        Route::get('', [DayPracticeController::class, 'index']);
-
-    });
+ 
 });
