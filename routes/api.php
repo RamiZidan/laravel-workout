@@ -38,6 +38,12 @@ Route::group(['midllware' => 'api'], function ($router) {
         ['middleware' => \App\Http\Middleware\Admin::class, 'prefix' => 'dashboard'],
         function ($router) {
             Route::group([
+                'prefix' => 'users'
+
+            ], function ($router) {
+                Route::get('', [UserController::class, 'index']);
+            });
+            Route::group([
                 'prefix' => 'muscles'
 
             ], function ($router) {
@@ -96,7 +102,7 @@ Route::group(['midllware' => 'api'], function ($router) {
             Route::group(['prefix' => 'user_muscle'], function ($router) {
                 Route::get('/{id}', [UserMuscleController::class, 'retrieve']);
                 Route::put('/{id}', [UserMuscleController::class, 'update']);
-                Route::get('', [UserMuscleController::class, 'admin_index']);
+                Route::get('/users/{user_id}', [UserMuscleController::class, 'admin_index']);
 
         
             });

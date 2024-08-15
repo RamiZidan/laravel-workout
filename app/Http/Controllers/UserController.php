@@ -81,5 +81,14 @@ class UserController extends Controller implements HasMiddleware
         }
     }
 
+    public function index(Request $request){
+        try{
+            $people = User::all();
+            return $this->returnData('users', $people);
+        }catch(\Throwable $ex){
+            return $this->returnError(400, $ex->getMessage());
+        }
+    }
+
 
 }
