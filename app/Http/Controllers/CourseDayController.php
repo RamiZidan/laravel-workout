@@ -132,7 +132,7 @@ class CourseDayController extends Controller implements HasMiddleware
                 return $this->returnError(404, 'Not Found');
             }
             if (!$request->user()->is_admin) {
-                if ($request->user()->id != $course->created_by) {
+                if ($request->user()->id != $course->created_by && !$course->is_public) {
                     return $this->returnError(403, 'Not Allowed to edit this day');
                 }
             }
@@ -163,7 +163,7 @@ class CourseDayController extends Controller implements HasMiddleware
             $course = Course::find($course_id);
 
             if (!$request->user()->is_admin) {
-                if ($request->user()->id != $course->created_by) {
+                if ($request->user()->id != $course->created_by && !$course->is_public) {
                     return $this->returnError(403, 'Not Allowed to edit this day');
                 }
             }
