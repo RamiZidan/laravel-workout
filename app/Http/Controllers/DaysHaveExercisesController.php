@@ -133,7 +133,7 @@ class DaysHaveExercisesController extends Controller implements HasMiddleware
                     }
                 }
             }
-            $day_exercises = Days_Have_Exercises::where('day_id', $course_day_id)->get();
+            $day_exercises = Days_Have_Exercises::where('day_id', $course_day_id)->with('exercise')->get();
             return $this->returnData('day_exercises', $day_exercises);
         } catch (\Throwable $ex) {
 
