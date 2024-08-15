@@ -116,8 +116,18 @@ class DayPracticeController extends Controller implements HasMiddleware
     {
         try {
             $user = $request->user();
-            $day_practice = Day_Practice::where('user_id', $user->id)->get();
-            return $this->returnData('day_practice', $day_practice);
+            if($user->is_admin){
+                try {
+                    $day_practice = Day_Practice::get();
+                    return $this->returnData('day_practice', $day_practice);
+                } catch (\Throwable $ex) {
+                    return $this->returnError(400, $ex->getMessage());
+                }
+            }
+            else{
+                $day_practice = Day_Practice::where('user_id', $user->id)->get();
+                return $this->returnData('day_practice', $day_practice);
+            }
         } catch (\Throwable $ex) {
             return $this->returnError(400, $ex->getMessage());
         }

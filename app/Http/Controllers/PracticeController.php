@@ -241,8 +241,20 @@ class PracticeController extends Controller implements HasMiddleware
     {
         try {
             $user = $request->user();
-            $practice = Practice::where('user_id', $user->id)->get();
-            return $this->returnData('practice', $practice);
+            if($user->is_admin){
+                try {
+                    $practice = Practice::get();
+                    return $this->returnData('practice', $practice);
+                } catch (\Throwable $ex) {
+        
+        
+                    return $this->returnError(400, $ex->getMessage());
+                }
+            }
+            else{
+                $practice = Practice::where('user_id', $user->id)->get();
+                return $this->returnData('practice', $practice);
+            }
         } catch (\Throwable $ex) {
 
             return $this->returnError(400, $ex->getMessage());
