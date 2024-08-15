@@ -38,8 +38,8 @@ class UserController extends Controller implements HasMiddleware
         try {
 
             $user = $request->user();
-            
-            $bmi = $request->weight / ($request->tall * $request->tall);
+            if($request->tall && $request->weight)
+                $bmi = $request->weight / ($request->tall * $request->tall);
             if ($request->course_id) {
                 if($user->course_id){
                     $old_course = Course::find($user->course_id);
@@ -55,7 +55,7 @@ class UserController extends Controller implements HasMiddleware
                     $days = Course_Day::where('course_id', $course->id)->get();
                     foreach ($days as $day) {
                         $new_day = Course_Day::create(['name' => $day->name, 'course_id' => $new_course->id]);
-                        $exercises = Days_Have_Exercises::where('course_day_id', $day->id)->get();
+                        $exercises = Days_Have_Exercises::where('day_id', $day->id)->get();
                         foreach ($exercises as $exercise) {
                             Days_Have_Exercises::create(['day_id' => $new_day->id, 'exercise_id' => $exercise->exercise_id]);
                         }
@@ -69,9 +69,11 @@ class UserController extends Controller implements HasMiddleware
 
                 $user->image = $filename;
             }
-       
-            $bmi = $user->weight / ($user->tall * $user->tall);
-            $user->bmi = $bmi;
+            if($user->tall && $user->weight){
+                $bmi = $user->weight / ($user->tall * $user->tall);
+                $user->bmi = $bmi;
+
+            }
             $user->save();
 
 

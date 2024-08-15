@@ -93,8 +93,6 @@ class UserMuscleController extends Controller implements HasMiddleware
     public function admin_index(Request $request, $user_id)
     {
         try {
-
-            
             $muscles = UserMuscle::where('user_id', $user_id)->with(['muscle'])->get();
             return $this->returnData('user_muscles', $muscles);
         } catch (\Throwable $ex) {
