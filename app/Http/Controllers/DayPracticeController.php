@@ -51,11 +51,11 @@ class DayPracticeController extends Controller implements HasMiddleware
             }
             $course = Course::find($course_day->course_id);
             $day_practice = Day_Practice::create([
-                'user_id' => $request->$user->id,
+                'user_id' => $user->id,
                 'day_id' => $request->day_id,
 
             ]);
-            $day_practices = Day_Practice::where('user_id', $day_practice->user_id)->whereDate('created_at', '==', $day_practice->created_at)->get();
+            $day_practices = Day_Practice::where('user_id', $day_practice->user_id)->whereDate('created_at', '=', $day_practice->created_at)->get();
             if (count($day_practices) == 1) {
                
                 $course->left_days -= 1;

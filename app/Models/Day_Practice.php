@@ -9,10 +9,13 @@ class Day_Practice extends Model
 {
     use HasFactory;
 
+    protected $table = "day_practices";
+
     protected $fillable = [
         'day_id',
         'user_id',
-        'course_id'
+        'course_id',
+        'created_at'
     ];
 
     

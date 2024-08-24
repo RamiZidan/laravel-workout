@@ -80,6 +80,7 @@ class PracticeController extends Controller implements HasMiddleware
             switch ($request->feed_back) {
                 case (1):
                     $new_exercise = Exercise::where('muscle_id', $exercise->muscle_id)->where('level', $exercise->level + 1)->first();
+                    
                     if ($new_exercise) {
                         $day_exercise->exercise_id = $new_exercise->id;
                         $user_muscle = UserMuscle::where('user_id', $user->id)->where('muscle_id', $exercise->muscle_id)->first();

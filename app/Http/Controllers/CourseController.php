@@ -44,23 +44,25 @@ class CourseController extends Controller implements HasMiddleware
             }
 
             $user = $request->user();
+            
             $course = Course::create([
                 'name' => $request->name,
                 'duration' => $request->duration,
                 'created_by' => $user->id,
-                'left_days' => $request->duration
+                'left_days' => $request->duration,
+                'is_public' =>  ($user->is_admin == 1 ? 1 : 0 ) 
 
             ]);
             $user = $request->user();
-            if ($user->is_admin) {
-                $course->is_public = $request->is_public;
-                $course->save();
-            }
+            // if ($user->is_admin) {
+            //     $course->is_public = $request->is_public;
+            //     $course->save();
+            // }
 
             return $this->returnData('course_id', $course->id);
 
         } catch (\Throwable $ex) {
-
+            
 
             return $this->returnError(400, $ex->getMessage());
         }
