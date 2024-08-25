@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 17, 2024 at 12:15 PM
+-- Generation Time: Aug 25, 2024 at 12:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -67,10 +67,13 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `name`, `duration`, `created_by`, `is_public`, `left_days`, `created_at`, `updated_at`) VALUES
-(2, 'Beginner\r\n', 30, 1, 1, 30, '2024-08-11 21:08:25', '2024-08-11 21:08:25'),
+(2, 'Beginner\r\n', 30, 1, 1, 30, '2024-08-11 21:08:25', '2024-08-25 07:23:02'),
 (4, 'Intermediate', 30, 1, 1, 30, '2024-08-16 18:23:32', '2024-08-16 18:23:32'),
 (5, 'Advance', 30, 1, 1, 30, '2024-08-16 18:24:58', '2024-08-16 18:24:58'),
-(11, 'Beginner\r\n', 30, 26, 0, 30, '2024-08-17 07:05:59', '2024-08-17 07:05:59');
+(11, 'Beginner\r\n', 30, 26, 0, 30, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
+(12, 'k', 32, 26, 0, 32, '2024-08-17 07:22:31', '2024-08-17 07:22:31'),
+(13, 'new course', 30, 26, 0, 30, '2024-08-17 07:50:31', '2024-08-17 07:50:31'),
+(16, 'Beginner\r\n', 30, 27, 0, 30, '2024-08-25 07:22:33', '2024-08-25 07:22:33');
 
 -- --------------------------------------------------------
 
@@ -114,7 +117,15 @@ INSERT INTO `course_days` (`id`, `name`, `course_id`, `created_at`, `updated_at`
 (47, 'Abs Day', 11, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
 (48, 'Shoulder Day', 11, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
 (49, 'Back Day', 11, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
-(50, 'Chest Day', 11, '2024-08-17 07:05:59', '2024-08-17 07:05:59');
+(50, 'Chest Day', 11, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
+(51, 'kkk', 12, '2024-08-17 07:26:33', '2024-08-17 07:26:33'),
+(52, 'leg day', 13, '2024-08-17 07:50:44', '2024-08-17 07:50:44'),
+(60, 'Arms day', 16, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(61, 'Legs Day', 16, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(62, 'Abs Day', 16, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(63, 'Shoulder Day', 16, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(64, 'Back Day', 16, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(65, 'Chest Day', 16, '2024-08-25 07:22:33', '2024-08-25 07:22:33');
 
 -- --------------------------------------------------------
 
@@ -172,7 +183,7 @@ INSERT INTO `days_have_exercises` (`id`, `day_id`, `exercise_id`, `created_at`, 
 (36, 19, 9, '2024-08-17 04:13:44', '2024-08-17 04:13:44'),
 (37, 19, 10, '2024-08-17 04:16:00', '2024-08-17 04:16:00'),
 (87, 45, 21, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
-(88, 45, 18, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
+(88, 45, 21, '2024-08-17 07:05:59', '2024-08-17 07:28:08'),
 (89, 46, 3, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
 (90, 46, 5, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
 (91, 47, 12, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
@@ -182,7 +193,25 @@ INSERT INTO `days_have_exercises` (`id`, `day_id`, `exercise_id`, `created_at`, 
 (95, 49, 23, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
 (96, 49, 27, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
 (97, 50, 7, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
-(98, 50, 2, '2024-08-17 07:05:59', '2024-08-17 07:05:59');
+(98, 50, 2, '2024-08-17 07:05:59', '2024-08-17 07:05:59'),
+(99, 51, 4, '2024-08-17 07:26:52', '2024-08-17 07:26:52'),
+(100, 52, 7, '2024-08-17 07:50:55', '2024-08-17 07:52:03'),
+(101, 52, 11, '2024-08-17 07:50:58', '2024-08-17 07:52:09'),
+(102, 52, 4, '2024-08-25 06:57:04', '2024-08-25 06:57:04'),
+(103, 52, 4, '2024-08-25 06:57:04', '2024-08-25 06:57:04'),
+(104, 52, 6, '2024-08-25 06:57:12', '2024-08-25 06:57:12'),
+(119, 60, 21, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(120, 60, 18, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(121, 61, 3, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(122, 61, 5, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(123, 62, 12, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(124, 62, 14, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(125, 63, 30, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(126, 63, 32, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(127, 64, 23, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(128, 64, 27, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(129, 65, 7, '2024-08-25 07:22:33', '2024-08-25 07:22:33'),
+(130, 65, 2, '2024-08-25 07:22:33', '2024-08-25 07:22:33');
 
 -- --------------------------------------------------------
 
@@ -195,7 +224,7 @@ CREATE TABLE `day_practices` (
   `day_id` int(11) DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `course_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `created_at` date DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -204,7 +233,14 @@ CREATE TABLE `day_practices` (
 --
 
 INSERT INTO `day_practices` (`id`, `day_id`, `user_id`, `course_id`, `created_at`, `updated_at`) VALUES
-(1, 45, 26, NULL, '2024-08-17 07:11:08', '2024-08-17 07:11:08');
+(1, 45, 26, NULL, '2024-08-17', '2024-08-17 07:11:08'),
+(2, 45, 26, NULL, '2024-08-17', '2024-08-17 07:22:14'),
+(3, 45, 26, NULL, '2024-08-17', '2024-08-17 07:28:09'),
+(4, 45, 26, NULL, '2024-08-17', '2024-08-17 07:30:15'),
+(5, 45, 26, NULL, '2024-08-17', '2024-08-17 07:31:35'),
+(6, 45, 26, NULL, '2024-08-17', '2024-08-17 07:32:29'),
+(7, 52, 26, NULL, '2024-08-17', '2024-08-17 07:52:11'),
+(8, 3, 27, NULL, '2024-08-25', '2024-08-25 07:22:47');
 
 -- --------------------------------------------------------
 
@@ -478,7 +514,21 @@ INSERT INTO `practices` (`id`, `user_id`, `duration`, `feed_back`, `created_at`,
 (64, 26, '00:00:00', '1', '2024-08-17 07:05:12', '2024-08-17 07:05:12', 20, 3),
 (65, 26, '00:00:00', '1', '2024-08-17 07:05:19', '2024-08-17 07:05:19', 19, 3),
 (66, 26, '00:00:01', '4', '2024-08-17 07:11:00', '2024-08-17 07:11:00', 21, 45),
-(67, 26, '00:00:01', '2', '2024-08-17 07:11:07', '2024-08-17 07:11:07', 18, 45);
+(67, 26, '00:00:01', '2', '2024-08-17 07:11:07', '2024-08-17 07:11:07', 18, 45),
+(68, 26, '00:00:01', '4', '2024-08-17 07:22:04', '2024-08-17 07:22:04', 21, 45),
+(69, 26, '00:00:01', '1', '2024-08-17 07:22:12', '2024-08-17 07:22:12', 18, 45),
+(70, 26, '00:00:01', '4', '2024-08-17 07:28:03', '2024-08-17 07:28:03', 21, 45),
+(71, 26, '00:00:00', '1', '2024-08-17 07:28:08', '2024-08-17 07:28:08', 20, 45),
+(72, 26, '00:00:01', '3', '2024-08-17 07:29:55', '2024-08-17 07:29:55', 21, 45),
+(73, 26, '00:00:01', '3', '2024-08-17 07:30:11', '2024-08-17 07:30:11', 21, 45),
+(74, 26, '00:00:01', '4', '2024-08-17 07:31:28', '2024-08-17 07:31:28', 21, 45),
+(75, 26, '00:00:00', '2', '2024-08-17 07:31:33', '2024-08-17 07:31:33', 21, 45),
+(76, 26, '00:00:00', '4', '2024-08-17 07:32:23', '2024-08-17 07:32:23', 21, 45),
+(77, 26, '00:00:01', '2', '2024-08-17 07:32:28', '2024-08-17 07:32:28', 21, 45),
+(78, 26, '00:00:03', '1', '2024-08-17 07:52:03', '2024-08-17 07:52:03', 2, 52),
+(79, 26, '00:00:01', '1', '2024-08-17 07:52:09', '2024-08-17 07:52:09', 4, 52),
+(85, 27, '00:00:00', '4', '2024-08-25 07:22:40', '2024-08-25 07:22:40', 21, 3),
+(86, 27, '00:00:01', '4', '2024-08-25 07:22:45', '2024-08-25 07:22:45', 18, 3);
 
 -- --------------------------------------------------------
 
@@ -535,27 +585,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `image`, `level`, `blank_duration`, `tall`, `weight`, `bmi`, `course_id`, `age`, `gender`, `is_admin`) VALUES
 (1, 'admin', 'sameer@gamil.com', '$2y$12$iuM36R79m1kiAeLKntHqhundmMwG.zaETvO2nZ9OSDn.34q6DbV1i', NULL, '2024-06-28 21:28:11', '2024-06-28 21:28:11', NULL, '1', NULL, 0, 0, NULL, NULL, 0, 0, 0),
-(2, 'test', 'beshr@gmail.com', '$2y$12$BymEZ/VLLdv35BHpvvDMAu7XiLAeYRWCatOHVATbLjfzg5pEHE2Iu', NULL, '2024-06-30 09:55:51', '2024-08-07 20:29:30', 'profiles/DEFAULT.png', '1', '04:10:00', 111, 10, 0, NULL, 22, 1, 0),
-(7, 'sameer', 'sameer3@gmail.com', '$2y$12$3Q5kUgNWyIq04n81m5p7auP986d0zhFYtDfm3c.DmoPqZHk47upem', NULL, '2024-08-07 19:20:50', '2024-08-07 19:20:50', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(8, 'sameer', 'sameer23@gmail.com', '$2y$12$obTil20gdsYBQbqUNI/4luY4KeYZGZFgz5O./9wh0mh.uqL.7I...', NULL, '2024-08-07 19:24:54', '2024-08-07 19:24:54', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(9, 'sameer', 'sameer243@gmail.com', '$2y$12$glE0U/bcMYrtTN77le7KX.DZ00fx.yPtRWBbbHLwx5gk.lJtIeH7a', NULL, '2024-08-07 19:44:27', '2024-08-07 19:44:27', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(10, 'sameer', 'sameer2433@gmail.com', '$2y$12$LVLMeen8d0KEEZLu969oaODPH6hGhAS78nkoErPxYg3YbkEeo6siq', NULL, '2024-08-07 19:45:22', '2024-08-07 19:45:22', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(11, 'sameer', 'sameer243f3@gmail.com', '$2y$12$4K7lplFidwb6EZdE1mlgZ.c33HO6Y3AABlgS4OsV0j0Dv0g8djsJC', NULL, '2024-08-07 19:45:50', '2024-08-07 19:45:50', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(12, 'sameer', 'sameerf243f3@gmail.com', '$2y$12$Hm7cfSafkHEj06oP25m8H.GC9V87z.J8NbXMGA6kvjxDR6HCs.f2W', NULL, '2024-08-07 19:46:27', '2024-08-07 19:46:27', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(13, 'sameer', 'sameerf24d3f3@gmail.com', '$2y$12$frhjMMundiGka0DJyW./2enUjjOeaVDmwb6TC77ytZqfAILhOGCNq', NULL, '2024-08-07 19:46:47', '2024-08-07 19:46:47', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(14, 'sameer', 'sameefrf24d3f3@gmail.com', '$2y$12$M88OTBLRM3lf62jxPAykwemDuY4drQIhIG8eCKRtslVsNV9YRqsTi', NULL, '2024-08-07 19:47:16', '2024-08-07 19:47:16', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(15, 'sameer', 'sameefrf24fd3f3@gmail.com', '$2y$12$V2XZo0NMbf/773jsRUr3H.B6DWdCBRue0JhBS3xEnegWfh3qR8IuO', NULL, '2024-08-07 19:49:22', '2024-08-07 19:49:22', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(16, 'sameer', 'ggg@gmail.com', '$2y$12$XIbe4T1Fvs/f8ewpP7YANOGC3gzijMVhFo08sgWHTzvKF3I1sEGAC', NULL, '2024-08-07 19:49:51', '2024-08-07 19:49:51', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(17, 'sameer', 'gggf@gmail.com', '$2y$12$pF88UPsTF6IB3tI5PtlBBuJs0reKuImDdzICNMJVxy7Y3bbdJCMmC', NULL, '2024-08-07 19:51:36', '2024-08-07 19:51:36', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(18, 'sameer', 'gggff@gmail.com', '$2y$12$1za7Zre8/AYFouUfjblgXeHkMX0v1hqQlR3ZtvKOeVIveRMigIFyG', NULL, '2024-08-07 19:53:07', '2024-08-07 19:53:07', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(19, 'sameer', 'gggfff@gmail.com', '$2y$12$4v676VxnbJR8ElrnxBWNqubivcXKb0fO/j.E5tr22zEaIDaH0Txye', NULL, '2024-08-07 19:54:35', '2024-08-07 19:54:35', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(20, 'sameer', 'fgggfff@gmail.com', '$2y$12$MXrOvijcSVX42c84tfEmnOO7brocTtBeYxXi2Ju97rQX79RdcjB5O', NULL, '2024-08-07 19:55:05', '2024-08-07 19:55:05', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(21, 'sameer', 'fggggfff@gmail.com', '$2y$12$vvM6R47.9M5GLEu9EUPs5uwh8Fb4VL7pUWXMJlLcxxoVwYd/4QblS', NULL, '2024-08-07 19:56:16', '2024-08-07 19:56:16', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(22, 'test', 'sameerfggggfff@gmail.com', '$2y$12$qV2TnFGsRtD8x1jq7fg3ru1Ir2MCyIz3BOM3HGmrFG62IXGCwIR2y', NULL, '2024-08-09 03:17:09', '2024-08-14 01:59:08', 'profiles/DEFAULT.png', '1', '04:10:00', 111, 10, 0, 2, 22, 1, 1),
-(23, 'new user', 'newuser@gmail.com', '$2y$12$MCQfG8GN7vDm5bVOQgHRXOgmTnFUesRp7bO3WpNu6LJdNEDiS4Iza', NULL, '2024-08-09 17:08:30', '2024-08-09 17:08:30', 'profiles/DEFAULT.png', '1', '00:04:02', 18, 90, 0, NULL, 30, 1, 0),
-(24, 'sameer', 'newuser2@gmail.com', '$2y$12$ZIPUzug3Byyj5lk6RkqCV.oLvdCbV4GLhs.knBXDVvtyi07VRcvCi', NULL, '2024-08-10 01:08:00', '2024-08-10 01:08:00', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(25, 'sameer', 'newuser3@gmail.com', '$2y$12$itay3VMhklKS5nAOohqmkeMvnWItQAUlfvvNlochl6SIkO6V6QqQ.', NULL, '2024-08-10 01:23:04', '2024-08-10 01:23:04', 'profiles/DEFAULT.png', '1', '00:04:02', 185, 90, 0, NULL, 30, 1, 0),
-(26, 'rami', 'ramizidan101@gmail.com', '$2y$12$CIJjJqTbG.JA6ofa0Qh1MuLxAc3Ftn1AyRFkms5dy11K/SDGZN.DW', NULL, '2024-08-17 03:31:11', '2024-08-17 07:10:50', 'profiles/DEFAULT.png', '1', '00:00:00', 170, 75, 0, 11, 21, 1, 0);
+(26, 'rami', 'admin@email.com', '$2y$12$CIJjJqTbG.JA6ofa0Qh1MuLxAc3Ftn1AyRFkms5dy11K/SDGZN.DW', NULL, '2024-08-17 03:31:11', '2024-08-25 06:56:58', 'profiles/DEFAULT.png', '1', NULL, 170, 75, 0, 13, 21, 1, 1),
+(27, 'user', 'user@email.com', '$2y$12$Vb2A8vgNIB4R817sfpV8aeZX6yR/RXDUw7ATGps9G1h2B7dm5rDRK', NULL, '2024-08-25 07:22:14', '2024-08-25 07:23:02', 'profiles/DEFAULT.png', '1', '02:02:02', 170, 70, 0, 16, 30, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -595,15 +626,20 @@ INSERT INTO `user_muscles` (`id`, `muscle_id`, `user_id`, `level`, `created_at`,
 (24, 2, 20, '1', '2024-08-10 02:36:55', '2024-08-10 02:36:55'),
 (25, 2, 21, '1', '2024-08-10 02:36:55', '2024-08-10 02:36:55'),
 (26, 2, 22, '1', '2024-08-10 02:36:55', '2024-08-14 02:00:50'),
-(27, 2, 23, '1', '2024-08-10 02:36:55', '2024-08-10 02:36:55'),
 (28, 2, 24, '1', '2024-08-10 02:36:55', '2024-08-10 02:36:55'),
 (29, 2, 25, '1', '2024-08-10 02:36:55', '2024-08-10 02:36:55'),
-(30, 2, 26, '1', '2024-08-17 03:31:11', '2024-08-17 06:33:09'),
-(31, 3, 26, '2', '2024-08-17 03:31:11', '2024-08-17 07:11:07'),
-(32, 4, 26, '4', '2024-08-17 03:31:11', '2024-08-17 06:32:14'),
+(30, 2, 26, '2', '2024-08-17 03:31:11', '2024-08-17 07:52:03'),
+(31, 3, 26, '4', '2024-08-17 03:31:11', '2024-08-17 07:28:03'),
+(32, 4, 26, '3', '2024-08-17 03:31:11', '2024-08-17 07:52:09'),
 (33, 5, 26, '3', '2024-08-17 03:31:11', '2024-08-17 06:34:34'),
 (34, 6, 26, '2', '2024-08-17 03:31:11', '2024-08-17 06:56:12'),
-(35, 7, 26, '4', '2024-08-17 03:31:11', '2024-08-17 06:37:10');
+(35, 7, 26, '4', '2024-08-17 03:31:11', '2024-08-17 06:37:10'),
+(36, 2, 27, '1', '2024-08-25 07:22:14', '2024-08-25 07:22:14'),
+(37, 3, 27, '2', '2024-08-25 07:22:14', '2024-08-25 07:22:45'),
+(38, 4, 27, '1', '2024-08-25 07:22:14', '2024-08-25 07:22:14'),
+(39, 5, 27, '1', '2024-08-25 07:22:14', '2024-08-25 07:22:14'),
+(40, 6, 27, '1', '2024-08-25 07:22:14', '2024-08-25 07:22:14'),
+(41, 7, 27, '1', '2024-08-25 07:22:14', '2024-08-25 07:22:14');
 
 --
 -- Indexes for dumped tables
@@ -746,25 +782,25 @@ ALTER TABLE `user_muscles`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `course_days`
 --
 ALTER TABLE `course_days`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `days_have_exercises`
 --
 ALTER TABLE `days_have_exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `day_practices`
 --
 ALTER TABLE `day_practices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `exercises`
@@ -806,19 +842,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `practices`
 --
 ALTER TABLE `practices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `user_muscles`
 --
 ALTER TABLE `user_muscles`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Constraints for dumped tables
